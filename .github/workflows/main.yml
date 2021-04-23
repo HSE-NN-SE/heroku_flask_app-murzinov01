@@ -50,17 +50,18 @@ jobs:
   TelegramNotifications:
     runs-on: ubuntu-latest
     needs: Deploy
-    if: failure()
     steps:
       - name: NotificationFailure
-      - uses: appleboy/telegram-action@master
+        uses: appleboy/telegram-action@master
+        if: failure()
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: ❌ error
       
       - name: NotificationSuccess
-      - uses: appleboy/telegram-action@master
+        uses: appleboy/telegram-action@master
+        if: success()
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
