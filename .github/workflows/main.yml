@@ -52,9 +52,16 @@ jobs:
     needs: Deploy
     if: failure()
     steps:
-      - name: Notification
-        uses: appleboy/telegram-action@master
+      - name: NotificationFailure
+      - uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: ❌ error
+      
+      - uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: ✅ !!Success!! ✅
+      
