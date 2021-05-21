@@ -39,20 +39,24 @@ jobs:
           python3 -m coverage report
           
           
-#   Deploy:
-#     runs-on: self-hosted
-#     needs: Tests
-#     steps:
-#       - uses: actions/checkout@v2
-#       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-#         with:
-#           heroku_api_key: ${{secrets.HEROKU_API}}
-#           heroku_app_name: "calculatormichail" #Must be unique in Heroku
-#           heroku_email: ${{secrets.HEROKU_EMAIL}}
+  Deploy:
+    runs-on: self-hosted
+    needs: Tests
+    steps:
+      - uses: actions/checkout@v2
+      - name: PWD
+        run: pwd
+      - name: Docker build
+        run: sudo docker build . --tag my_docker
+      - name: Change tag
+        run: sudo docker image tag my_docker murzinov01/my_docker
+      - name: Push docker
+        run: sudo docker push murzinov01/my_docker
+  
           
   TelegramNotifications:
     runs-on: self-hosted
-    needs: Tests
+    needs: Deploy
     steps:
       - name: NotificationFailure
         uses: appleboy/telegram-action@master
