@@ -46,6 +46,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: PWD
         run: pwd
+      - name: Docker login
+        run: sudo docker login --username=$DOCKER_USER --password=$DOCKER_PASS
       - name: Docker build
         run: sudo docker build . --tag my_docker
       - name: Change tag
