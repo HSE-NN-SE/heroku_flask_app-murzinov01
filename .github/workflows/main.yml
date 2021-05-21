@@ -23,7 +23,7 @@ jobs:
         run: |
          sudo apt update 
          sudo apt install -y python3-pip
-         pip install flake8
+         pip3 install flake8
       - name: Codestyle
         run: python3 -m flake8 ./ --ignore=F401,E402
   
