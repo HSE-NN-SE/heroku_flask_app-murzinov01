@@ -34,25 +34,25 @@ jobs:
       - uses: actions/checkout@v2
       - name: tests
         run: |
-          pip install -e '.[test]'
+          pip3 install -e '.[test]'
           python3 -m coverage run -m pytest
           python3 -m coverage report
           
           
-  Deploy:
-    runs-on: self-hosted
-    needs: Tests
-    steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API}}
-          heroku_app_name: "calculatormichail" #Must be unique in Heroku
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
+#   Deploy:
+#     runs-on: self-hosted
+#     needs: Tests
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+#         with:
+#           heroku_api_key: ${{secrets.HEROKU_API}}
+#           heroku_app_name: "calculatormichail" #Must be unique in Heroku
+#           heroku_email: ${{secrets.HEROKU_EMAIL}}
           
   TelegramNotifications:
     runs-on: self-hosted
-    needs: Deploy
+    needs: Tests
     steps:
       - name: NotificationFailure
         uses: appleboy/telegram-action@master
